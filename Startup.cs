@@ -5,6 +5,11 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Npgsql;
+using Npgsql.EntityFrameworkCore.PostgreSQL;
+using System;
+using URLShortenerCSReact.Models;
 
 namespace URLShortenerCSReact
 {
@@ -21,7 +26,28 @@ namespace URLShortenerCSReact
         public void ConfigureServices(IServiceCollection services)
         {
 
+            var connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            services.AddDbContext<URLShortenerCSReact.Models.DatabaseContext>(options => options.UseNpgsql(connectionString));
+
+            // Check database connection
+        // using (var scope = services.BuildServiceProvider().CreateScope())
+        // {
+        //     var context = scope.ServiceProvider.GetService<DatabaseContext>();
+        //     try
+        //     {
+        //         context.Database.OpenConnection();
+        //         var result = context.Database.ExecuteSqlRaw("SELECT 1");
+        //         Console.WriteLine("Database connected" + result);
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         Console.WriteLine("Error connecting to database: " + ex.Message);
+        //     }
+        // }
+
             services.AddControllersWithViews();
+
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

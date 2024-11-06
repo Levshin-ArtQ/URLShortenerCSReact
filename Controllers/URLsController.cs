@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
+using URLShortenerCSReact.Models;
 
 namespace URLShortenerCSReact.Controllers
 {
@@ -7,32 +8,32 @@ namespace URLShortenerCSReact.Controllers
   [ApiController]
   public class URLsController : ControllerBase
   {
-    public object RegisterUser(object model)
-    {
-      throw new System.NotImplementedException();
-    }
 
-    public object LoginUser(object model)
+    [HttpPost("shorten/{userId?}/{originalURL?}")]
+    public object ShortenURL(string userId, string originalURL)
     {
       throw new System.NotImplementedException();
-    }
+      URLModel url = new URLModel();
 
-    public object LogoutUser(object model)
-    {
-      throw new System.NotImplementedException();
+      url.UserId = userId;
+      url.OriginalURL = originalURL;
+      // todo generate code
+      return url;
     }
-    public object ShortenURL(object model)
-    {
-      throw new System.NotImplementedException();
-    }
-
+    [HttpGet]
     public object GetURLs(object model)
     {
       throw new System.NotImplementedException();
     }
+
+    [HttpPost("redirect")]
     public object RedirectURL(object model)
     {
       throw new System.NotImplementedException();
+      // return redirect to original URL
+      // then increment redirect counter for URL
+      // or return 404
+
     }
   }
 }
